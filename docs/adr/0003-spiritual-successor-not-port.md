@@ -1,0 +1,11 @@
+# Spiritual successor with measured compatibility, not a 1:1 port
+
+dentaku-ts is a successor to Ruby Dentaku (by the same author), not a behavior-identical port. The surface syntax and function catalog are preserved — measured against the 398 unique formulas in the Ruby spec suite, ~95%+ evaluate unchanged — but four semantics are deliberately tightened:
+
+1. **Case-sensitive identifiers** (function names remain case-insensitive; caps-style `SUM(...)` appears in ~33% of corpus formulas and is untouchable).
+2. **Strict booleans in conditionals** — `if`, `and`/`or`/`&&`/`||` require boolean operands and throw typed errors; no Ruby truthiness where `0` and `""` are true. This extends the strictness `AND()`/`OR()` already had.
+3. **No string→number coercion in arithmetic** — `"2" + 2` is a type error, removing Ruby Dentaku's asymmetry where string literals failed at parse time but stringly context values coerced at eval time.
+4. **Conventional bitwise precedence** — `| & << >>` bind above comparators, replacing Ruby Dentaku's precedence-0 quirk (below comparators and equal to `and`/`or`).
+5. **Bare date literals default off** — `2020-1-1` is arithmetic (2018) unless date literals are enabled on the calculator, inverting Ruby Dentaku's `raw_date_literals: true` default. Unlike the other tightenings this silently changes a value rather than raising; accepted because unquoted ISO dates in formulas are rare and the tokenizer-eats-subtraction trap is worse.
+
+Each tightening measured at 0–3% breakage on the spec corpus. Host-API regrets (global function registry, global aliases, global cache flags, nil-swallowing evaluate) are fixed unconditionally since they don't affect formula results. Rejected: pure functional equivalence (carries known traps forward for the sake of edge cases), and a free redesign of the syntax (forfeits every existing formula corpus for marginal elegance).
