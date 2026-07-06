@@ -25,4 +25,11 @@ export interface FunctionDef {
   maxArgs?: number | "variadic";
   /** Parse-time validation hook (e.g. enum fns require an identifier at position 1). */
   checkArgs?: (argNodes: Node[]) => void;
+  /**
+   * Dependency reporting override for special forms whose default child-union
+   * is wrong: `if` short-circuits through an evaluable predicate (issue 007),
+   * enum functions subtract their bound lambda identifiers (issue 009).
+   * Additive extension to the frozen contract, signed off during wave 4→5.
+   */
+  dependencies?: (argNodes: Node[], ctx?: EvalContext) => string[];
 }

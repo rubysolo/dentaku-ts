@@ -37,10 +37,13 @@ export class FunctionCallNode implements Node {
   }
 
   /**
-   * Union over the argument nodes. Special forms that need short-circuit or
-   * lambda-aware dependency reporting refine this in later issues.
+   * Union over the argument nodes, unless the FunctionDef overrides it
+   * (short-circuiting `if`, lambda-aware enum functions).
    */
   dependencies(ctx?: EvalContext): string[] {
+    if (this.def.dependencies !== undefined) {
+      return this.def.dependencies([...this.args], ctx);
+    }
     return unionDependencies(this.args, ctx);
   }
 }
