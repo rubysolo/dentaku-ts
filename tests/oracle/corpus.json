@@ -1,0 +1,4197 @@
+[
+  {
+    "formula": "",
+    "vars": {},
+    "result": {
+      "type": "null"
+    }
+  },
+  {
+    "formula": "      CASE fruit\n      WHEN 'apple'\n        THEN\n        CASE quantity\n        WHEN 2 THEN 3\n        END\n      WHEN 'banana'\n        THEN\n        CASE quantity\n        WHEN 1 THEN 2\n        END\n      END\n",
+    "vars": {
+      "quantity": 1,
+      "fruit": "banana"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "      CASE fruit\n      WHEN 'apple'\n        THEN\n        CASE quantity\n        WHEN 2 THEN 3\n        END\n      WHEN 'banana'\n        THEN\n        CASE quantity\n        WHEN 1 THEN 2\n        END\n      END\n",
+    "vars": {
+      "quantity": 2,
+      "fruit": "apple"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "      CASE fruit\n      WHEN 'apple'\n        THEN 1 * quantity\n      WHEN 'banana'\n        THEN\n        CASE QUANTITY\n        WHEN 1 THEN 2\n        WHEN 10 THEN\n          CASE type\n          WHEN 'organic' THEN 5\n          END\n        END\n      END\n",
+    "vars": {
+      "type": "organic",
+      "quantity": 1,
+      "QUANTITY": 10,
+      "fruit": "banana"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "5"
+    }
+  },
+  {
+    "formula": "      CASE fruit\n      WHEN 'apple'\n        THEN 1 * quantity\n      WHEN 'banana'\n        THEN\n        CASE quantity\n        WHEN 1 THEN 2\n        WHEN 10 THEN\n          CASE type\n          WHEN 'organic' THEN 5\n          END\n        END\n      END\n",
+    "vars": {
+      "type": "organic",
+      "quantity": 10,
+      "fruit": "banana"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "5"
+    }
+  },
+  {
+    "formula": "      CASE number\n      WHEN (2 * 2)\n        THEN 1\n      WHEN (2 * 3)\n        THEN 2\n      END\n",
+    "vars": {
+      "number": 4
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "      CASE number\n      WHEN (2 * 2)\n        THEN 1\n      WHEN (2 * 3)\n        THEN 2\n      END\n",
+    "vars": {
+      "number": 6
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "      CASE number\n      WHEN 42\n        THEN 1\n      END\n",
+    "vars": {
+      "number": 2
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "\"foo\" & \"bar\"",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "(((695759/735000)^(1/(1981-1991)))-1)*1000",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "5.5017959154894691156590197710138374027740285"
+    }
+  },
+  {
+    "formula": "()",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "(-1 + 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "(-2 + 3) - 1",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0"
+    }
+  },
+  {
+    "formula": "(-2 - 3) - 1",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-6"
+    }
+  },
+  {
+    "formula": "(-5)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-5"
+    }
+  },
+  {
+    "formula": "(1 + 7) * (8 ^ 2) / - 3.0 - apples * 5%",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "(1 > 5) OR LEFT(\"abc\", 1)",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "(1+1+1)/3*100",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "100"
+    }
+  },
+  {
+    "formula": "(2 + 3) - 1",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "(400/60%)*1",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "666.66666666666666666666666666667"
+    }
+  },
+  {
+    "formula": "(5 + 4) * 3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "27"
+    }
+  },
+  {
+    "formula": "(5 | 2) + 1",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "(5+3",
+    "vars": {},
+    "error": "TokenizerError"
+  },
+  {
+    "formula": "(}",
+    "vars": {},
+    "error": "TokenizerError"
+  },
+  {
+    "formula": ")",
+    "vars": {},
+    "error": "TokenizerError"
+  },
+  {
+    "formula": ",",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "-(1 + 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-3"
+    }
+  },
+  {
+    "formula": "-(negative) - 1",
+    "vars": {
+      "negative": "1"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "-2"
+    }
+  },
+  {
+    "formula": "-1 + 2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "-1 - - 2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "-2 + 3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "-5",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-5"
+    }
+  },
+  {
+    "formula": "-negative",
+    "vars": {
+      "negative": "-1"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "-negative",
+    "vars": {
+      "negative": -1
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "-negative - 1",
+    "vars": {
+      "negative": "-1"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "0"
+    }
+  },
+  {
+    "formula": "-negative - 1",
+    "vars": {
+      "negative": "1"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "-2"
+    }
+  },
+  {
+    "formula": "-num + 3",
+    "vars": {
+      "num": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": ".5 * 3.7",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1.85"
+    }
+  },
+  {
+    "formula": "0 * 10 ^ -5",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0"
+    }
+  },
+  {
+    "formula": "0.1 + 0.2 == 0.3",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "0.253/0.253",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "0.253/d",
+    "vars": {
+      "d": 0.253
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "0.3 * 2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0.6"
+    }
+  },
+  {
+    "formula": "0.4 * 2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0.8"
+    }
+  },
+  {
+    "formula": "0x80",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "128"
+    }
+  },
+  {
+    "formula": "0xCAFE & (0xDECAF << 3) | (0xBEEF >> 5)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "17919"
+    }
+  },
+  {
+    "formula": "0xFF >> 6",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "1",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "1     / 1     ",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "1 & \"bar\"",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "1 + + 1",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "1 + -(2 ^ 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-3"
+    }
+  },
+  {
+    "formula": "1 + apples",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "1 - - - 2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-1"
+    }
+  },
+  {
+    "formula": "1 - - 2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "1 - 2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-1"
+    }
+  },
+  {
+    "formula": "1 < 2 and 3 <= 4 or 5 > 6 AND 7 >= 8 OR 9 != 10 and true",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "1 << 3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "1%0",
+    "vars": {},
+    "error": "ZeroDivisionError"
+  },
+  {
+    "formula": "1+1",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "1.0 & \"bar\"",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "1.5 * 3.7",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "5.55"
+    }
+  },
+  {
+    "formula": "1/0",
+    "vars": {},
+    "error": "ZeroDivisionError"
+  },
+  {
+    "formula": "10 + x",
+    "vars": {
+      "x": "abc"
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "10 ^ 2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "100"
+    }
+  },
+  {
+    "formula": "10/d",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "123 * TRUE",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "1353+91-1-3322-22",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-1901"
+    }
+  },
+  {
+    "formula": "15 % (4 * 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "7"
+    }
+  },
+  {
+    "formula": "15 % 8",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "7"
+    }
+  },
+  {
+    "formula": "1foo * 2",
+    "vars": {
+      "1foo": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "2 & 3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "2 & 3 * 9",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "2 + 2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "2 - -3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "5"
+    }
+  },
+  {
+    "formula": "2 - 3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-1"
+    }
+  },
+  {
+    "formula": "2 -1",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "2 << 3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "16"
+    }
+  },
+  {
+    "formula": "2 >> 3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0"
+    }
+  },
+  {
+    "formula": "2 ^ - 1",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0.5"
+    }
+  },
+  {
+    "formula": "2 ^ -(3 - 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0.5"
+    }
+  },
+  {
+    "formula": "2 | 3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "2 | 3 * 9",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "27"
+    }
+  },
+  {
+    "formula": "2+2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "2017-01-01 2017-01-2 2017-1-03 2017-01-04 12:23:42 2017-1-5 1:2:3 2017-1-06 1:02:30 2017-01-07 12:34:56 Z 2017-01-08 1:2:3 +0800 2017-01-08T01:02:03.456Z",
+    "vars": {},
+    "error": "ParseError",
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2017-12-24 23:59:59",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2017-12-24T23:59:59+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2020-01-01T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 + 30",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2020-01-31T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 + duration(1, day)",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2020-01-02T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 + duration(1, month)",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2020-02-01T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 + duration(1, year)",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2021-01-01T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 + duration(30, days)",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2020-01-31T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 + duration(30, months)",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2022-07-01T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 + duration(30, years)",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2050-01-01T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 - 1",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2019-12-31T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 - 2019-12-31",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 - duration(1, day)",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2019-12-31T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 - duration(1, month)",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2019-12-01T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2020-01-01 - duration(1, year)",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2019-01-01T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2022-12-01",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2022-12-01T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2022-12-31",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2022-12-31T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2023-01-01",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2023-01-01T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2023-02-01",
+    "vars": {},
+    "result": {
+      "type": "datetime",
+      "value": "2023-02-01T00:00:00+00:00"
+    },
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "2024/01/02",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1012"
+    }
+  },
+  {
+    "formula": "2024/01/06",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "337.33333333333333333333333333333"
+    }
+  },
+  {
+    "formula": "25",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "25"
+    }
+  },
+  {
+    "formula": "2|3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "3 + -num",
+    "vars": {
+      "num": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "3 + 0 * -3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "3 + 0 / -3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "4",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "4 + \"asdf\"",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "40 + N",
+    "vars": {
+      "N": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "42"
+    }
+  },
+  {
+    "formula": "40 + N",
+    "vars": {
+      "n": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "42"
+    }
+  },
+  {
+    "formula": "40 + n",
+    "vars": {
+      "N": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "42"
+    }
+  },
+  {
+    "formula": "40 + n",
+    "vars": {
+      "n": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "42"
+    }
+  },
+  {
+    "formula": "400/60%",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "666.66666666666666666666666666667"
+    }
+  },
+  {
+    "formula": "5",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "5"
+    }
+  },
+  {
+    "formula": "5 * -",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "5 * 4 + 3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "23"
+    }
+  },
+  {
+    "formula": "5 * x",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "5 + 3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "5 + 4",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "9"
+    }
+  },
+  {
+    "formula": "5 + 4*3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "17"
+    }
+  },
+  {
+    "formula": "5 + 5, x",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "5 / 2",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2.5"
+    }
+  },
+  {
+    "formula": "5 < 4",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "5%",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0.05"
+    }
+  },
+  {
+    "formula": "5+3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "5, x",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "50% + 50%",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "60% * 1",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0.6"
+    }
+  },
+  {
+    "formula": "6E23",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "600000000000000000000000"
+    }
+  },
+  {
+    "formula": "6e-23",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0.00000000000000000000006"
+    }
+  },
+  {
+    "formula": "7+3",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "10"
+    }
+  },
+  {
+    "formula": "80",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "80"
+    }
+  },
+  {
+    "formula": "A1",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "ABS(-4.2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "4.2"
+    }
+  },
+  {
+    "formula": "ABS(0)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0"
+    }
+  },
+  {
+    "formula": "ABS(1.3)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1.3"
+    }
+  },
+  {
+    "formula": "ABS(2020-1-1)",
+    "vars": {},
+    "error": "ArgumentError",
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "ABS(x * -1)",
+    "vars": {
+      "x": 10
+    },
+    "result": {
+      "type": "decimal",
+      "value": "10"
+    }
+  },
+  {
+    "formula": "ALL(items, item, item.value)",
+    "vars": {
+      "items": [
+        {
+          "value": 1
+        },
+        {}
+      ]
+    },
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "ALL(people, person, person.age < adult)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "ALL(vals, val, val > 1)",
+    "vars": {
+      "vals": 1
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "ALL(vals, val, val > 1)",
+    "vars": {
+      "vals": 2
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "ALL(vals, val, val > 1)",
+    "vars": {
+      "vals": [1, 2, 3]
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "ALL({1, 2, 3}, \"val\", val % 2 == 0)",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "ALL({1, 2, 3}, val, val % 2 == 0)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "AND(\"r\")",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "AND()",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "AND(1 = 1, \"2\" = \"2\", true = true, true)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "AND(1 = 1, 0 = 1)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "AND(AND(1 = 1), AND(true != false, AND(true)))",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "AND(a,b)",
+    "vars": {
+      "a": null,
+      "b": null
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "AND(a,b)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "AND(y = 1, x = 1)",
+    "vars": {
+      "x": 1,
+      "y": 2
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "ANY(items, item, item.value)",
+    "vars": {
+      "items": [
+        {
+          "value": 1
+        },
+        {}
+      ]
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "ANY(items, item, item.value)",
+    "vars": {
+      "items": [
+        {},
+        {
+          "value": 1
+        }
+      ]
+    },
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "ANY(vals, val, val > 1)",
+    "vars": {
+      "vals": 1
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "ANY(vals, val, val > 1)",
+    "vars": {
+      "vals": 2
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "ANY(vals, val, val > 1)",
+    "vars": {
+      "vals": [1, 2, 3]
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "ANY(vals, val, val > 1)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "ANY({1, 2, 3}, \"val\", val % 2 == 0)",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "AVG()",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "AVG(1, 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1.5"
+    }
+  },
+  {
+    "formula": "AVG(1, x, 1.8)",
+    "vars": {
+      "x": "2.3"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1.7"
+    }
+  },
+  {
+    "formula": "AVG(1, x, 1.8)",
+    "vars": {
+      "x": 2.3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1.7"
+    }
+  },
+  {
+    "formula": "AVG(1, x, 2.3)",
+    "vars": {
+      "x": [4, 5]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "3.075"
+    }
+  },
+  {
+    "formula": "AVG(x)",
+    "vars": {
+      "x": 2.3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2.3"
+    }
+  },
+  {
+    "formula": "AVG(x)",
+    "vars": {
+      "x": []
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "Apples + pears",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "B1+B1+B1",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "C1+C1+C1+C1",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "CASE a WHEN 'one' THEND 1 END",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "CASE a WHEN 1 THEN true ELSE THEN IF(1, 2, 3, 4) END",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "CASE a when 'one' then 1",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "CASE a when 'one' then end",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "CASE x WHEN 1 THEN 2 WHEN 3 THEN 4 END",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "CASE x WHEN 1 THEN CASE Y WHEN \"A\" THEN 2 WHEN \"B\" THEN 3 END END",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "CONCAT('1', '2', )",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "CONCAT(bob, dole)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "CONCAT(s1, s2, s3)",
+    "vars": {
+      "s1": "ab",
+      "s2": "cd",
+      "s3": "ef"
+    },
+    "result": {
+      "type": "string",
+      "value": "abcdef"
+    }
+  },
+  {
+    "formula": "COUNT()",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0"
+    }
+  },
+  {
+    "formula": "COUNT(1, x, 1.8)",
+    "vars": {
+      "x": 2.3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "COUNT(1, x, 3)",
+    "vars": {
+      "x": [4, 5]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "COUNT(x)",
+    "vars": {
+      "x": "dentaku"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "7"
+    }
+  },
+  {
+    "formula": "COUNT(x)",
+    "vars": {
+      "x": 2.3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "COUNT(x)",
+    "vars": {
+      "x": [4, 5]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "COUNT(x)",
+    "vars": {
+      "x": [4]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "COUNT({1, 2, 3})",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "D1",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "FILTER(vals, val, val > 1)",
+    "vars": {
+      "vals": 1
+    },
+    "result": {
+      "type": "array",
+      "items": []
+    }
+  },
+  {
+    "formula": "FILTER(vals, val, val > 1)",
+    "vars": {
+      "vals": 2
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "2"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "FILTER(vals, val, val > 1)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "FILTER({1, 2, 3}, \"val\", val % 2 == 0)",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "Force / Acceleration",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "Force / Mass",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "IF(1, 0, IF(1, 2, 3, 4))",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "IF(5 / 0 > 0, 100, 1000)",
+    "vars": {},
+    "error": "ZeroDivisionError"
+  },
+  {
+    "formula": "IF(5 < 4, 3, 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "IF(a, 1, 0)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "IF(a,1,0)",
+    "vars": {
+      "a": null,
+      "b": null
+    },
+    "result": {
+      "type": "decimal",
+      "value": "0"
+    }
+  },
+  {
+    "formula": "IF(a,b)",
+    "vars": {
+      "a": 1,
+      "b": 1
+    },
+    "error": "ParseError"
+  },
+  {
+    "formula": "IF(a[0] = NULL, \"five\", 'seven')",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "IF(bar, 1, 2)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "IF(d != 0, ratio, 0)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "IF(foo, 1, 2)",
+    "vars": {
+      "foo": null
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "IF(null, 1, 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "IF(val = 0, 0, IF(val > 0, 0, 0))",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "INTERCEPT(1, 2)",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "INTERCEPT(x_values, y_values)",
+    "vars": {
+      "x_values": [1, 2, 3, 4, 5],
+      "y_values": [2, 3, 5, 4, 6]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1.3"
+    }
+  },
+  {
+    "formula": "INTERCEPT(y, x)",
+    "vars": {
+      "x": [1, 2, 3],
+      "y": [2, 3, 5, 4]
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "INTERCEPT(y, x)",
+    "vars": {
+      "x": [],
+      "y": [2, 3, 5, 4]
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "INTERCEPT(ys, xs)",
+    "vars": {
+      "xs": [6, 13, 15, 10, 11, 10],
+      "ys": [-1, 8, 8, 13, 3, 15]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "9.436802973977695"
+    }
+  },
+  {
+    "formula": "MAP(items, item, item.value)",
+    "vars": {
+      "items": [
+        {
+          "value": 1
+        },
+        {}
+      ]
+    },
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "MAP(vals, val, val + 1)",
+    "vars": {
+      "vals": 1
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "2"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "MAP(vals, val, val + 1)",
+    "vars": {
+      "vals": []
+    },
+    "result": {
+      "type": "array",
+      "items": []
+    }
+  },
+  {
+    "formula": "MAP(vals, val, val + 1)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "MAP(vals, val, val + step)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "MAP({1, 2, 3}, \"val\", val + 1)",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "MAX(1, 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "MAX(1, x, 1.8)",
+    "vars": {
+      "x": "2.3"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2.3"
+    }
+  },
+  {
+    "formula": "MAX(1, x, 1.8)",
+    "vars": {
+      "x": 2.3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2.3"
+    }
+  },
+  {
+    "formula": "MAX(1, x, 1.8)",
+    "vars": {
+      "x": [1.5, 2.3, 1.7]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2.3"
+    }
+  },
+  {
+    "formula": "MAX(a,b)",
+    "vars": {
+      "a": null,
+      "b": null
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "MAX(a,b)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "MAX(x)",
+    "vars": {
+      "x": [1.5, 2.3, 1.7]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2.3"
+    }
+  },
+  {
+    "formula": "MAX(x)",
+    "vars": {
+      "x": []
+    },
+    "result": {
+      "type": "null"
+    }
+  },
+  {
+    "formula": "MIN(1, x, 1.8)",
+    "vars": {
+      "x": "0.3"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "0.3"
+    }
+  },
+  {
+    "formula": "MIN(1, x, 1.8)",
+    "vars": {
+      "x": 2.3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "MIN(1, x, 1.8)",
+    "vars": {
+      "x": [1.5, 0.3, 1.7]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "0.3"
+    }
+  },
+  {
+    "formula": "MIN(a,b)",
+    "vars": {
+      "a": null,
+      "b": null
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "MIN(a,b)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "MIN(x)",
+    "vars": {
+      "x": [1.5, 2.3, 1.7]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1.5"
+    }
+  },
+  {
+    "formula": "MIN(x)",
+    "vars": {
+      "x": []
+    },
+    "result": {
+      "type": "null"
+    }
+  },
+  {
+    "formula": "MUL()",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "MUL(1, x, 1.8)",
+    "vars": {
+      "x": 2.3
+    },
+    "error": "ParseError"
+  },
+  {
+    "formula": "MUL(x)",
+    "vars": {
+      "x": 2.3
+    },
+    "error": "ParseError"
+  },
+  {
+    "formula": "MUL(x)",
+    "vars": {
+      "x": []
+    },
+    "error": "ParseError"
+  },
+  {
+    "formula": "Mass * Acceleration",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "NOT(a)",
+    "vars": {
+      "a": null,
+      "b": null
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "NOT(a)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "NOT(some_boolean)",
+    "vars": {
+      "some_boolean": false
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "NOT(some_boolean)",
+    "vars": {
+      "some_boolean": true
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "NOT(some_boolean) AND -1 > 3",
+    "vars": {
+      "some_boolean": true
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "NOT(some_boolean) AND 7 > 5",
+    "vars": {
+      "some_boolean": true
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "NOT(some_boolean) OR 7 < 5",
+    "vars": {
+      "some_boolean": false
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "NULL",
+    "vars": {},
+    "result": {
+      "type": "null"
+    }
+  },
+  {
+    "formula": "OR(\"r\")",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "OR()",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "OR(1 = \"1\", \"2\" = \"2\", true = false, false)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "OR(1 = \"2\", 0 = 1)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "OR(OR(1 = 0), OR(true = false, OR(true)))",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "OR(a,b)",
+    "vars": {
+      "a": null,
+      "b": null
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "OR(a,b)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "OR(y = 1, x = 1)",
+    "vars": {
+      "x": 1,
+      "y": 2
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "PLUCK(users, \"age\")",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "error": "ParseError"
+  },
+  {
+    "formula": "PLUCK(users, age)",
+    "vars": {
+      "users": []
+    },
+    "result": {
+      "type": "array",
+      "items": []
+    }
+  },
+  {
+    "formula": "PLUCK(users, age)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "44"
+        },
+        {
+          "type": "decimal",
+          "value": "27"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "PLUCK(users, age)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob"
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "decimal",
+          "value": "27"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "PLUCK(users, age)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "PLUCK(users, age, -1)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob"
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "-1"
+        },
+        {
+          "type": "decimal",
+          "value": "27"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "PLUCK({1, 2, 3}, age)",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "REDUCE(vals, memo, val, CONCAT(memo, val))",
+    "vars": {
+      "vals": ["wo", "rl", "d"]
+    },
+    "result": {
+      "type": "string",
+      "value": "world"
+    }
+  },
+  {
+    "formula": "REDUCE(vals, memo, val, CONCAT(memo, val), \"hello\")",
+    "vars": {
+      "vals": ["wo", "rl", "d"]
+    },
+    "result": {
+      "type": "string",
+      "value": "helloworld"
+    }
+  },
+  {
+    "formula": "REDUCE(vals, memo, val, memo + val)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "REDUCE({1, 2, 3}, \"memo\", val, memo + val)",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "REDUCE({1, 2, 3}, memo, \"val\", memo + val)",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "ROUND(1.8)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "ROUND(1.8, 2020-1-1)",
+    "vars": {},
+    "error": "ArgumentError",
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "ROUND(2020-1-1, 0)",
+    "vars": {},
+    "error": "ArgumentError",
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "ROUND(a)",
+    "vars": {
+      "a": null
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "ROUND(a)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "ROUND(apples * 0.93)",
+    "vars": {
+      "apples": 10
+    },
+    "result": {
+      "type": "decimal",
+      "value": "9"
+    }
+  },
+  {
+    "formula": "ROUND(x, y)",
+    "vars": {
+      "x": "1.8453",
+      "y": "3"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1.845"
+    }
+  },
+  {
+    "formula": "ROUND(x, y)",
+    "vars": {
+      "x": "1.8453",
+      "y": null
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "ROUND(x, y)",
+    "vars": {
+      "x": 1.8453,
+      "y": 3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1.845"
+    }
+  },
+  {
+    "formula": "ROUNDDOWN(1.8)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "ROUNDDOWN(a)",
+    "vars": {
+      "a": null
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "ROUNDDOWN(a)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "ROUNDDOWN(x, y)",
+    "vars": {
+      "x": "1.8453",
+      "y": "3"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1.845"
+    }
+  },
+  {
+    "formula": "ROUNDDOWN(x, y)",
+    "vars": {
+      "x": "1.8453",
+      "y": null
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "ROUNDDOWN(x, y)",
+    "vars": {
+      "x": 1.8453,
+      "y": 3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1.845"
+    }
+  },
+  {
+    "formula": "ROUNDUP(1.8)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "ROUNDUP(8.2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "9"
+    }
+  },
+  {
+    "formula": "ROUNDUP(a)",
+    "vars": {
+      "a": null
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "ROUNDUP(a)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "ROUNDUP(x, y)",
+    "vars": {
+      "x": "1.8453",
+      "y": "3"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1.846"
+    }
+  },
+  {
+    "formula": "ROUNDUP(x, y)",
+    "vars": {
+      "x": "1.8453",
+      "y": null
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "ROUNDUP(x, y)",
+    "vars": {
+      "x": 1.8453,
+      "y": 3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1.846"
+    }
+  },
+  {
+    "formula": "RoundDown(8.2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "SECOND * 2",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "SQRT(20)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "4.47213595499958"
+    }
+  },
+  {
+    "formula": "SUM()",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "SUM(1, x, 1.8)",
+    "vars": {
+      "x": "2.3"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "5.1"
+    }
+  },
+  {
+    "formula": "SUM(1, x, 1.8)",
+    "vars": {
+      "x": 2.3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "5.1"
+    }
+  },
+  {
+    "formula": "SUM(1, x, 2.3)",
+    "vars": {
+      "x": [4, 5]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "12.3"
+    }
+  },
+  {
+    "formula": "SUM(1, x, SUM(4, 5))",
+    "vars": {
+      "x": "2.3"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "12.3"
+    }
+  },
+  {
+    "formula": "SUM(FILTER(vals, val, val > 1))",
+    "vars": {
+      "vals": [1, 2, 3]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "5"
+    }
+  },
+  {
+    "formula": "SUM(MAP(vals, val, val + 1))",
+    "vars": {
+      "vals": [1, 2, 3]
+    },
+    "result": {
+      "type": "decimal",
+      "value": "9"
+    }
+  },
+  {
+    "formula": "SUM(a,b)",
+    "vars": {
+      "a": null,
+      "b": null
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "SUM(a,b)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "SUM(x)",
+    "vars": {
+      "x": 2.3
+    },
+    "result": {
+      "type": "decimal",
+      "value": "2.3"
+    }
+  },
+  {
+    "formula": "SUM(x)",
+    "vars": {
+      "x": []
+    },
+    "result": {
+      "type": "decimal",
+      "value": "0"
+    }
+  },
+  {
+    "formula": "SWITCH(1, \"one\", 1, 2, \"two\", 3)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "SWITCH(1, 1, \"one\", 2, \"two\")",
+    "vars": {},
+    "result": {
+      "type": "string",
+      "value": "one"
+    }
+  },
+  {
+    "formula": "SWITCH(1, 1, \"one\", 2, \"two\", 1, \"three\")",
+    "vars": {},
+    "result": {
+      "type": "string",
+      "value": "one"
+    }
+  },
+  {
+    "formula": "SWITCH(3, 1, \"one\", 2, \"two\")",
+    "vars": {},
+    "result": {
+      "type": "null"
+    }
+  },
+  {
+    "formula": "SWITCH(3, 1, \"one\", 2, \"two\", \"no match\")",
+    "vars": {},
+    "result": {
+      "type": "string",
+      "value": "no match"
+    }
+  },
+  {
+    "formula": "THIRD * 2",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "TRUE AND",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "XOR(\"r\")",
+    "vars": {},
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "XOR()",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "XOR(false, false)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "XOR(false, true)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "XOR(false, true, true)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "XOR(y = 1, x = 1)",
+    "vars": {
+      "x": 1,
+      "y": 2
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "`1foo (bar)` * 2",
+    "vars": {
+      "1foo (bar)": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "`a-c` + b",
+    "vars": {
+      "a-c": 1
+    },
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "`a.basket.of`",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "`a.basket`",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "`b`",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "`bob the builder` + `dole the digger` / 3",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "`fo1o *bar*` * 2",
+    "vars": {
+      "fo1o *bar*": 4
+    },
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "`foo1 bar` * 2",
+    "vars": {
+      "foo1 bar": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "`foo1-bar` * 2",
+    "vars": {
+      "foo1-bar": 4
+    },
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "a + b",
+    "vars": {
+      "a": 1
+    },
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "a + b",
+    "vars": {
+      "a": ["2017-01-01", "2017-01-02"],
+      "b": ["2017-01-01"]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string",
+          "value": "2017-01-01"
+        },
+        {
+          "type": "string",
+          "value": "2017-01-02"
+        },
+        {
+          "type": "string",
+          "value": "2017-01-01"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "a + b",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "a - b",
+    "vars": {
+      "a": ["2017-01-01", "2017-01-02"],
+      "b": ["2017-01-01"]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string",
+          "value": "2017-01-02"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "a / 5",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "a / 5 + d",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "a+1",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "a.basket",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "a.basket.of",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "a/b",
+    "vars": {
+      "a": "10",
+      "b": "2"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "5"
+    }
+  },
+  {
+    "formula": "a[0]",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "a[1]",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "a[x+1]",
+    "vars": {
+      "x": 1
+    },
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "a[x]",
+    "vars": {
+      "x": 1
+    },
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "abs(-2.2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2.2"
+    }
+  },
+  {
+    "formula": "abs(5)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "5"
+    }
+  },
+  {
+    "formula": "age + kids",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "all(users, u, u.age < 50)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "all(users, u, u.age > 33)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "all(xs, x, x > 3)",
+    "vars": {
+      "xs": [1, 2, 3, 4]
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "all({1,2,3,4}, x, x > 0)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "all({1,2,3,4}, x, x > 10)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "andover < 10",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "animal = \"giraffe\"",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "animal = 'giraffe'",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "any(users, u, u.age < 18)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "any(users, u, u.age > 33)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "any(xs, x, x > 2)",
+    "vars": {
+      "xs": 3
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "any(xs, x, x > 3)",
+    "vars": {
+      "xs": 3
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "any(xs, x, x > 3)",
+    "vars": {
+      "xs": [1, 2, 3, 4]
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "any({1,2,3,4}, x, x > 10)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "any({1,2,3,4}, x, x > 3)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "apples * 1.5",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "apples * 7",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "apples + 1",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "apples + oranges",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "apples[0]",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "area",
+    "vars": {
+      "length": 5,
+      "width": 5
+    },
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "asin(2)",
+    "vars": {},
+    "error": "MathDomainError"
+  },
+  {
+    "formula": "b",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "b.c + b.d[1]",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "base_area * height",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "bob + / 3",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "bob + dole / 3",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "case (a % 5) when 0 then a else b end",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "case a whend 'one' then 1 end",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "contains('BC', 'ABCD')",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "count() + count()",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "0"
+    }
+  },
+  {
+    "formula": "d1 - d2",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "data < 1",
+    "vars": {
+      "data": {
+        "a": 5
+      }
+    },
+    "error": "ArgumentError"
+  },
+  {
+    "formula": "e[0] + 1",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "exp!(5 * 3)",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "find('BC', 'ABCD')",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "first",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "first * equation",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "fo1o * 2",
+    "vars": {
+      "fo1o": 4
+    },
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "foo",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "foo * 1.5",
+    "vars": {
+      "foo": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "3"
+    }
+  },
+  {
+    "formula": "foo * 1.5",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "foo * 2",
+    "vars": {
+      "foo": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "foo * 2",
+    "vars": {
+      "foo": 4
+    },
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "foo1 * 2",
+    "vars": {
+      "foo1": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "foo1 * 2",
+    "vars": {
+      "foo1": 4
+    },
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "fruit = \"Apple\"",
+    "vars": {
+      "fruit": "Apple"
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "fruit = \"Apple\"",
+    "vars": {
+      "fruit": "apple"
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "fruit = \"apple\"",
+    "vars": {
+      "fruit": "apple"
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "fruit = \"apple\"",
+    "vars": {
+      "fruit": "pear"
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "fruit_quantities.apple * discounted_fruit_prices.apple",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "fruit_quantities.pear * discounted_fruit_prices.pear",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "happiness",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "have_money",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "health",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "i_am_false",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "if (-1 < 5, -1, 5)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-1"
+    }
+  },
+  {
+    "formula": "if (-1 = -1, -1, 5)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-1"
+    }
+  },
+  {
+    "formula": "if (foo < 8, 10, 20)",
+    "vars": {
+      "foo": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "10"
+    }
+  },
+  {
+    "formula": "if (foo < 8, 10, 20)",
+    "vars": {
+      "foo": 9
+    },
+    "result": {
+      "type": "decimal",
+      "value": "20"
+    }
+  },
+  {
+    "formula": "if(-5 > x, -7, -8) - 9",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "if(foo < 8, 10, 20)",
+    "vars": {
+      "foo": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "10"
+    }
+  },
+  {
+    "formula": "if(foo < 8, 10, 20)",
+    "vars": {
+      "foo": 9
+    },
+    "result": {
+      "type": "decimal",
+      "value": "20"
+    }
+  },
+  {
+    "formula": "if(x < 10, y, z)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "left('ABCD', 2)",
+    "vars": {},
+    "result": {
+      "type": "string",
+      "value": "AB"
+    }
+  },
+  {
+    "formula": "len('ABCD')",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "length * 2",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "length * width",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "m * 12",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "make_money",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "map(users, u, IF(u.age < 30, u, null))",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "entries": {
+            "name": {
+              "type": "string",
+              "value": "Jane"
+            },
+            "age": {
+              "type": "decimal",
+              "value": "27"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "formula": "map(users, u, u.age)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "44"
+        },
+        {
+          "type": "decimal",
+          "value": "27"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "map(users, u, u.name)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string",
+          "value": "Bob"
+        },
+        {
+          "type": "string",
+          "value": "Jane"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "map(xs, x, x * 2)",
+    "vars": {
+      "xs": [1, 2, 3, 4]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "2"
+        },
+        {
+          "type": "decimal",
+          "value": "4"
+        },
+        {
+          "type": "decimal",
+          "value": "6"
+        },
+        {
+          "type": "decimal",
+          "value": "8"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "map({1,2,3,4}, x, x * 2)",
+    "vars": {},
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "2"
+        },
+        {
+          "type": "decimal",
+          "value": "4"
+        },
+        {
+          "type": "decimal",
+          "value": "6"
+        },
+        {
+          "type": "decimal",
+          "value": "8"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "mid('ABCD', 2, 2)",
+    "vars": {},
+    "result": {
+      "type": "string",
+      "value": "BC"
+    }
+  },
+  {
+    "formula": "monkeys / 1.5",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "monkeys < 7",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "mul(1, x, 1.8)",
+    "vars": {
+      "x": "2.3"
+    },
+    "error": "ParseError"
+  },
+  {
+    "formula": "mul(1, x, 2.3)",
+    "vars": {
+      "x": [4, 5]
+    },
+    "error": "ParseError"
+  },
+  {
+    "formula": "mul(1, x, mul(4, 5))",
+    "vars": {
+      "x": "2.3"
+    },
+    "error": "ParseError"
+  },
+  {
+    "formula": "not (8 < 5)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "not(8 < 5)",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "number = 5",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "number == 5",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "number_of_sheets / if(multi_color, sheets_per_minute_color, sheets_per_minute_black)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "octopi <= 7500 && sharks > 1500",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "octopi <= 7500 AND sharks > 1500",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "oranges > 7",
+    "vars": {
+      "oranges": 10
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "pears * 2",
+    "vars": {
+      "pears": 5
+    },
+    "result": {
+      "type": "decimal",
+      "value": "10"
+    }
+  },
+  {
+    "formula": "perimeter <= 7500",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "pi * radius ^ 2",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "pineapples * 5",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "pluck(users, age)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "44"
+        },
+        {
+          "type": "decimal",
+          "value": "27"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "pluck(users, name)",
+    "vars": {
+      "users": [
+        {
+          "name": "Bob",
+          "age": 44
+        },
+        {
+          "name": "Jane",
+          "age": 27
+        }
+      ]
+    },
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string",
+          "value": "Bob"
+        },
+        {
+          "type": "string",
+          "value": "Jane"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "right('ABCD', 2)",
+    "vars": {},
+    "result": {
+      "type": "string",
+      "value": "CD"
+    }
+  },
+  {
+    "formula": "round(-1.23, 1)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-1.2"
+    }
+  },
+  {
+    "formula": "round(8.2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "8"
+    }
+  },
+  {
+    "formula": "round(8.75, 1)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "8.8"
+    }
+  },
+  {
+    "formula": "round(8.8)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "9"
+    }
+  },
+  {
+    "formula": "round(fruit_prices.apple * discounts[0], 2)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "round(fruit_prices.pear * discounts[1], 2)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "rounddown(1.234)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "rounddown(1.234, 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1.23"
+    }
+  },
+  {
+    "formula": "roundup(1.234)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "2"
+    }
+  },
+  {
+    "formula": "roundup(1.234, 2)",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "1.24"
+    }
+  },
+  {
+    "formula": "roundup(roundup(3 * cherries) + raspberries)",
+    "vars": {
+      "cherries": 1.5,
+      "raspberries": 0.9
+    },
+    "result": {
+      "type": "decimal",
+      "value": "6"
+    }
+  },
+  {
+    "formula": "sea_monkeys > 1500",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "second",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "second * equation",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "size < 3 or admin = 1",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "size < 3 || admin = 1",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "some_boolean AND 7 < 5",
+    "vars": {
+      "some_boolean": true
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "some_boolean AND 7 > 5",
+    "vars": {
+      "some_boolean": false
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "some_boolean AND 7 > 5",
+    "vars": {
+      "some_boolean": true
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "some_boolean OR 7 < 5",
+    "vars": {
+      "some_boolean": false
+    },
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "some_boolean OR 7 < 5",
+    "vars": {
+      "some_boolean": true
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "some_boolean OR 7 > 5",
+    "vars": {
+      "some_boolean": true
+    },
+    "result": {
+      "type": "boolean",
+      "value": true
+    }
+  },
+  {
+    "formula": "substitute('ABCD', 'BC', 'XY')",
+    "vars": {},
+    "result": {
+      "type": "string",
+      "value": "AXYD"
+    }
+  },
+  {
+    "formula": "t + 1*24*60*60",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "t1 < 2017-01-02",
+    "vars": {},
+    "error": "UnboundVariableError",
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "t1 < t2",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "t1 > 2017-01-02",
+    "vars": {},
+    "error": "UnboundVariableError",
+    "flags": {
+      "dateLiterals": true
+    }
+  },
+  {
+    "formula": "t1 > t2",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "third",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "true AND",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "true AND false",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "true and false",
+    "vars": {},
+    "result": {
+      "type": "boolean",
+      "value": false
+    }
+  },
+  {
+    "formula": "true_lies and falsehoods",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "undefined()",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "value + duration(1, month)",
+    "vars": {
+      "value": "2023-01-01"
+    },
+    "result": {
+      "type": "datetime",
+      "value": "2023-02-01T00:00:00+00:00"
+    }
+  },
+  {
+    "formula": "value + duration(1, month)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "value - 7200",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "value - duration(1, day)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "value - duration(1, month)",
+    "vars": {
+      "value": "2023-01-01"
+    },
+    "result": {
+      "type": "datetime",
+      "value": "2022-12-01T00:00:00+00:00"
+    }
+  },
+  {
+    "formula": "value - duration(1, month)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "value - duration(1, year)",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "value - value2",
+    "vars": {
+      "value": "2023-01-01",
+      "value2": "2022-12-31"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
+  },
+  {
+    "formula": "value - value2",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "value2 - value",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "volume * 5.432",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "weekly_apple_budget + pear * 4",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "weekly_budget.apples + weekly_budget.pears",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "weekly_fruit_budget * 4",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "x * 2",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "x * y",
+    "vars": {
+      "x": ".123",
+      "y": "100"
+    },
+    "result": {
+      "type": "decimal",
+      "value": "12.3"
+    }
+  },
+  {
+    "formula": "x + 1",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "y + 3",
+    "vars": {},
+    "error": "UnboundVariableError"
+  },
+  {
+    "formula": "{-5, -2}[-1]",
+    "vars": {},
+    "result": {
+      "type": "decimal",
+      "value": "-2"
+    }
+  },
+  {
+    "formula": "{1, 2, 3}",
+    "vars": {},
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "1"
+        },
+        {
+          "type": "decimal",
+          "value": "2"
+        },
+        {
+          "type": "decimal",
+          "value": "3"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "{1, 2, 3} + {4,5,6}",
+    "vars": {},
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "1"
+        },
+        {
+          "type": "decimal",
+          "value": "2"
+        },
+        {
+          "type": "decimal",
+          "value": "3"
+        },
+        {
+          "type": "decimal",
+          "value": "4"
+        },
+        {
+          "type": "decimal",
+          "value": "5"
+        },
+        {
+          "type": "decimal",
+          "value": "6"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "{1, 2, 3} - {2,3}",
+    "vars": {},
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "1"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "{1, 2, }",
+    "vars": {},
+    "error": "ParseError"
+  },
+  {
+    "formula": "{1,2,3}",
+    "vars": {},
+    "result": {
+      "type": "array",
+      "items": [
+        {
+          "type": "decimal",
+          "value": "1"
+        },
+        {
+          "type": "decimal",
+          "value": "2"
+        },
+        {
+          "type": "decimal",
+          "value": "3"
+        }
+      ]
+    }
+  },
+  {
+    "formula": "{}",
+    "vars": {},
+    "result": {
+      "type": "array",
+      "items": []
+    }
+  },
+  {
+    "formula": "ρ * 2",
+    "vars": {
+      "ρ": 2
+    },
+    "result": {
+      "type": "decimal",
+      "value": "4"
+    }
+  },
+  {
+    "formula": "如果(1,2,3)",
+    "vars": {},
+    "error": "ParseError"
+  }
+]

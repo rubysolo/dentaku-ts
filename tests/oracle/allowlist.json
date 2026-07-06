@@ -1,0 +1,131 @@
+{
+  "description": "Divergence allowlist: corpus entries where dentaku-ts intentionally differs from Ruby dentaku 3.5.7, each justified by an ADR-0003 tightening or ADR-0004. The oracle runner (issue 014) asserts the TS-side `expected` outcome for listed entries and fails on any entry that stops diverging (stale). Seeded by issue 002; completed by issue 014.",
+  "entrySchema": {
+    "formula": "string — must equal a corpus entry's formula exactly",
+    "vars": "object, optional (default {}) — must equal the corpus entry's vars exactly; (formula, vars) identifies the entry",
+    "reason": "one of \"ADR-0003.1\"…\"ADR-0003.5\" | \"ADR-0004\"",
+    "expected": "TS-side outcome: a TS error class name string, or an encoded result object using the corpus result encoding",
+    "note": "string, optional — reviewer context (what Ruby did and why TS differs)"
+  },
+  "entries": [
+    {
+      "formula": "-(negative) - 1",
+      "vars": { "negative": "1" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces the string context value \"1\" to a number and returns -2; TS removes string->number coercion in arithmetic"
+    },
+    {
+      "formula": "-negative",
+      "vars": { "negative": "-1" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces \"-1\" and returns 1; TS rejects negation of a string"
+    },
+    {
+      "formula": "-negative - 1",
+      "vars": { "negative": "-1" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces \"-1\" and returns 0"
+    },
+    {
+      "formula": "-negative - 1",
+      "vars": { "negative": "1" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces \"1\" and returns -2"
+    },
+    {
+      "formula": "40 + N",
+      "vars": { "n": 2 },
+      "reason": "ADR-0003.1",
+      "expected": "UnboundVariableError",
+      "note": "Ruby downcases identifiers, so N resolves to the n binding and returns 42; TS identifiers are case-sensitive"
+    },
+    {
+      "formula": "40 + n",
+      "vars": { "N": 2 },
+      "reason": "ADR-0003.1",
+      "expected": "UnboundVariableError",
+      "note": "Ruby downcases context keys, so N binds n and returns 42; TS identifiers are case-sensitive"
+    },
+    {
+      "formula": "AND(a,b)",
+      "vars": { "a": null, "b": null },
+      "reason": "ADR-0003.2",
+      "expected": "TypeMismatchError",
+      "note": "Ruby treats explicit nil as logical false and returns false; TS requires boolean operands"
+    },
+    {
+      "formula": "IF(a,1,0)",
+      "vars": { "a": null, "b": null },
+      "reason": "ADR-0003.2",
+      "expected": "TypeMismatchError",
+      "note": "Ruby treats the nil predicate as false and returns 0; TS requires a boolean predicate"
+    },
+    {
+      "formula": "IF(foo, 1, 2)",
+      "vars": { "foo": null },
+      "reason": "ADR-0003.2",
+      "expected": "TypeMismatchError",
+      "note": "Ruby treats the nil predicate as false and returns 2; TS requires a boolean predicate"
+    },
+    {
+      "formula": "IF(null, 1, 2)",
+      "vars": {},
+      "reason": "ADR-0003.2",
+      "expected": "TypeMismatchError",
+      "note": "Ruby treats the null literal predicate as false and returns 2; TS requires a boolean predicate"
+    },
+    {
+      "formula": "NOT(a)",
+      "vars": { "a": null, "b": null },
+      "reason": "ADR-0003.2",
+      "expected": "TypeMismatchError",
+      "note": "Ruby treats nil as false and returns true; TS requires a boolean operand"
+    },
+    {
+      "formula": "OR(a,b)",
+      "vars": { "a": null, "b": null },
+      "reason": "ADR-0003.2",
+      "expected": "TypeMismatchError",
+      "note": "Ruby treats explicit nil as logical false and returns false; TS requires boolean operands"
+    },
+    {
+      "formula": "a/b",
+      "vars": { "a": "10", "b": "2" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces the string context values and returns 5; TS removes string->number coercion in arithmetic"
+    },
+    {
+      "formula": "value + duration(1, month)",
+      "vars": { "value": "2023-01-01" },
+      "reason": "ADR-0004",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces the date-shaped string to a Time at eval and returns 2023-02-01; TS removes eval-time string->date coercion (dates require DATE() or date-typed context values)"
+    },
+    {
+      "formula": "value - duration(1, month)",
+      "vars": { "value": "2023-01-01" },
+      "reason": "ADR-0004",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces the date-shaped string to a Time at eval and returns 2022-12-01; TS removes eval-time string->date coercion"
+    },
+    {
+      "formula": "value - value2",
+      "vars": { "value": "2023-01-01", "value2": "2022-12-31" },
+      "reason": "ADR-0004",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces both date-shaped strings to Times and returns 1 (days); TS removes eval-time string->date coercion"
+    },
+    {
+      "formula": "x * y",
+      "vars": { "x": ".123", "y": "100" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces the string context values and returns 12.3; TS removes string->number coercion in arithmetic"
+    }
+  ]
+}
