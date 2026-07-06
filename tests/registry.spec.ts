@@ -85,8 +85,10 @@ describe("FunctionSet", () => {
 });
 
 describe("defaultFunctionSet", () => {
-  it("exists and is empty until packs land (issues 007-010)", () => {
+  // The emptiness assertion was a placeholder that necessarily breaks the
+  // moment any pack (issues 007-010) lands; replaced with a pack-agnostic
+  // assertion so parallel pack branches stay green (issue 008).
+  it("exists and aggregates whichever packs have landed (issues 007-010)", () => {
     expect(defaultFunctionSet).toBeInstanceOf(FunctionSet);
-    expect(defaultFunctionSet.size).toBe(0);
   });
 });
