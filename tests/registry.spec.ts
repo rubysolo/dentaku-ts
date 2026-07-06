@@ -85,8 +85,32 @@ describe("FunctionSet", () => {
 });
 
 describe("defaultFunctionSet", () => {
-  it("exists and is empty until packs land (issues 007-010)", () => {
+  // The "empty until packs land" placeholder expired with issue 007. This
+  // assertion is landing-order-proof: it names only issue 007's functions and
+  // does not pin the total size, so packs 008-010 can land in any order.
+  it("includes the logic and numeric packs (issue 007)", () => {
     expect(defaultFunctionSet).toBeInstanceOf(FunctionSet);
-    expect(defaultFunctionSet.size).toBe(0);
+    const pack007 = [
+      "if",
+      "and",
+      "or",
+      "xor",
+      "not",
+      "switch",
+      "min",
+      "max",
+      "sum",
+      "mul",
+      "avg",
+      "count",
+      "round",
+      "rounddown",
+      "roundup",
+      "abs",
+      "intercept",
+    ];
+    for (const name of pack007) {
+      expect(defaultFunctionSet.has(name)).toBe(true);
+    }
   });
 });
