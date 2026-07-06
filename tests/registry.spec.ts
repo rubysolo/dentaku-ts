@@ -85,8 +85,12 @@ describe("FunctionSet", () => {
 });
 
 describe("defaultFunctionSet", () => {
-  it("exists and is empty until packs land (issues 007-010)", () => {
+  // Placeholder updated as packs land (issues 007-010): membership, not size,
+  // so parallel pack merges stay green. Issue 009 landed the collection pack.
+  it("contains each landed pack's functions", () => {
     expect(defaultFunctionSet).toBeInstanceOf(FunctionSet);
-    expect(defaultFunctionSet.size).toBe(0);
+    for (const name of ["map", "filter", "all", "any", "pluck", "reduce"]) {
+      expect(defaultFunctionSet.has(name)).toBe(true);
+    }
   });
 });
