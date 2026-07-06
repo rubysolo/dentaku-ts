@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { defaultFunctionSet } from "../src/functions/builtins.js";
+import { collectionFunctions } from "../src/functions/collection.js";
+import { dateFunctions } from "../src/functions/date.js";
+import { logicFunctions } from "../src/functions/logic.js";
+import { mathFunctions } from "../src/functions/math.js";
+import { numericFunctions } from "../src/functions/numeric.js";
 import { FunctionRegistry, FunctionSet } from "../src/functions/registry.js";
+import { stringFunctions } from "../src/functions/string.js";
 import type { FunctionDef } from "../src/functions/types.js";
 
 const def = (name: string): FunctionDef => ({
@@ -85,8 +91,22 @@ describe("FunctionSet", () => {
 });
 
 describe("defaultFunctionSet", () => {
-  it("exists and is empty until packs land (issues 007-010)", () => {
+  // Pack-agnostic: stays green whichever subset of packs (issues 007-010) has
+  // landed, replacing the "empty until packs land" placeholder from issue 003.
+  it("aggregates exactly the landed pack defs", () => {
     expect(defaultFunctionSet).toBeInstanceOf(FunctionSet);
-    expect(defaultFunctionSet.size).toBe(0);
+    const packDefs = [
+      ...logicFunctions,
+      ...numericFunctions,
+      ...stringFunctions,
+      ...collectionFunctions,
+      ...dateFunctions,
+      ...mathFunctions,
+    ];
+    const expectedNames = new Set(packDefs.map((d) => d.name.toLowerCase()));
+    expect(defaultFunctionSet.size).toBe(expectedNames.size);
+    for (const name of expectedNames) {
+      expect(defaultFunctionSet.has(name)).toBe(true);
+    }
   });
 });
