@@ -244,14 +244,6 @@ const SKIP: ReadonlyMap<string, string> = new Map<string, string>([
     "case (a % 5) when 0 then a else b end",
     "printed CASE with an operation switch does not re-parse (Ruby v3.5.7 parity)",
   ],
-  [
-    // Ruby's identifier scanner is Unicode-aware (`[[[:word:]]\.]+`), so the
-    // oracle recorded a result; the TS tokenizer's `[\w.]+` is ASCII-only and
-    // rejects `ρ` before any AST exists to round-trip (issue 005 scope — the
-    // tokenizer is not owned by issue 013).
-    "ρ * 2",
-    "TS tokenizer does not (yet) accept non-ASCII identifiers; nothing parses",
-  ],
 ]);
 
 interface RoundtripCase {

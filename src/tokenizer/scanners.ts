@@ -279,9 +279,14 @@ export function buildScanners(options: TokenizerOptions): Scanner[] {
 
   // ADR-0003.1: identifier case is preserved by default; Ruby downcased unless
   // case_sensitive. The caseInsensitiveIdentifiers option restores Ruby behavior.
+  // Unicode-aware like Ruby's [[[:word:]]\.]+ (POSIX word class matches ρ etc.);
+  // JS \b is ASCII-only so the redundant boundary is dropped — the greedy class
+  // already ends at the first non-word character.
   const downcase = options.caseInsensitiveIdentifiers === true;
   scanners.push(
-    singleToken(/[\w.]+\b/y, "identifier", (raw) => (downcase ? raw.toLowerCase() : raw)),
+    singleToken(/[\p{L}\p{M}\p{Nd}\p{Pc}.]+/uy, "identifier", (raw) =>
+      downcase ? raw.toLowerCase() : raw,
+    ),
   );
 
   // Backtick-quoted identifiers keep their case verbatim even under

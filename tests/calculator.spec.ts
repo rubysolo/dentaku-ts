@@ -238,11 +238,9 @@ describe("Calculator", () => {
     });
   });
 
-  // Ruby: 'supports unicode characters in identifiers' (ρ * 2). The TS
-  // tokenizer's identifier grammar is ASCII \w — bare unicode identifiers do
-  // not tokenize (divergence, not ADR-covered; reported to the orchestrator).
-  // Backtick-quoted identifiers are the working equivalent:
-  it.skip("supports bare unicode characters in identifiers", () => {
+  // Ruby: 'supports unicode characters in identifiers' (ρ * 2). The identifier
+  // scanner is Unicode-aware like Ruby's POSIX word class (fixed post-011).
+  it("supports bare unicode characters in identifiers", () => {
     expect(calc().evaluate("ρ * 2", { ρ: 2 })).toBe(4);
   });
 

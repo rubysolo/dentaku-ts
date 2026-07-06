@@ -14,6 +14,7 @@ import { defaultFunctionSet } from "./functions/builtins.js";
 import { FunctionRegistry, type FunctionSet } from "./functions/registry.js";
 import type { FunctionDef } from "./functions/types.js";
 import { parseFormula } from "./parser/parser.js";
+import { print as printAst } from "./printer.js";
 import { type ExternalValue, toExternal, toInternal, type Value, valueType } from "./values.js";
 
 /**
@@ -202,6 +203,11 @@ export class Calculator {
     });
     this.#astCache?.set(formula, node);
     return node;
+  }
+
+  /** Renders a formula or AST to its canonical string form (see src/printer.ts). */
+  print(formula: string | Node): string {
+    return printAst(this.ast(formula));
   }
 
   // --- memory ------------------------------------------------------------------
