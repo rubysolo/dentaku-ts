@@ -2,7 +2,7 @@
 
 ## 0.1.0
 
-Initial release. Dentaku TS is the TypeScript successor to the Ruby
+Initial release. Dentaku is the TypeScript successor to the Ruby
 [dentaku](https://github.com/rubysolo/dentaku) gem, by the same author: the
 same formula syntax and function catalog, redesigned for TypeScript hosts.
 
