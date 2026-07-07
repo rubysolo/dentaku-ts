@@ -233,10 +233,7 @@ const UNPARSEABLE = new Set(["ParseError", "TokenizerError"]);
  * Corpus formulas that parse but legitimately cannot round-trip, each with a
  * reason. Must stay at ≤5 entries (issue 013 acceptance criteria).
  */
-const SKIP: ReadonlyMap<string, string> = new Map<string, string>([
-  // (empty — the CASE unparenthesized-switch entry was removed when the
-  // parser adopted the gem's v4.0.0-pre fix, commit f16e75a)
-]);
+const SKIP: ReadonlyMap<string, string> = new Map<string, string>([]);
 
 interface RoundtripCase {
   readonly formula: string;

@@ -239,7 +239,7 @@ describe("Calculator", () => {
   });
 
   // Ruby: 'supports unicode characters in identifiers' (ρ * 2). The identifier
-  // scanner is Unicode-aware like Ruby's POSIX word class (fixed post-011).
+  // scanner is Unicode-aware like Ruby's POSIX word class.
   it("supports bare unicode characters in identifiers", () => {
     expect(calc().evaluate("ρ * 2", { ρ: 2 })).toBe(4);
   });
