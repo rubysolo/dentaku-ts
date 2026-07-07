@@ -234,16 +234,8 @@ const UNPARSEABLE = new Set(["ParseError", "TokenizerError"]);
  * reason. Must stay at ≤5 entries (issue 013 acceptance criteria).
  */
 const SKIP: ReadonlyMap<string, string> = new Map<string, string>([
-  [
-    // The printer emits Ruby's exact output `CASE a % 5 WHEN 0 THEN a ELSE b
-    // END` (asserted in tests/printer.spec.ts), but the parser — like Ruby's,
-    // verified against v3.5.7 — only finalizes the CASE switch expression at
-    // the first WHEN when no operator is still pending, so the unparenthesized
-    // printed form does not re-parse. Ruby cannot re-parse its own printed
-    // form here either ("Unprocessed token close").
-    "case (a % 5) when 0 then a else b end",
-    "printed CASE with an operation switch does not re-parse (Ruby v3.5.7 parity)",
-  ],
+  // (empty — the CASE unparenthesized-switch entry was removed when the
+  // parser adopted the gem's v4.0.0-pre fix, commit f16e75a)
 ]);
 
 interface RoundtripCase {

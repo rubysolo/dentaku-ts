@@ -509,8 +509,11 @@ class Parser {
           this.#pushCaseConditional();
           this.#consume(2);
           this.#bumpArity();
-        } else if (this.#top()?.kind === "case") {
-          // First WHEN: finalize the switch-variable expression.
+        } else if (above === undefined || above.kind === "op") {
+          // First WHEN (gem v4.0.0-pre parity, commit f16e75a): fold any
+          // operators pending from an unparenthesized switch expression
+          // (CASE a % 5 WHEN ...), then finalize the switch variable.
+          this.#consumeUntil(["case"]);
           this.#operations.push(
             entry(
               "caseSwitch",

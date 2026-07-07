@@ -371,6 +371,23 @@ describe("AST comparators (spec/ast/comparator_spec.rb)", () => {
 
 // --- spec/ast/case_spec.rb -----------------------------------------------------
 
+describe("CASE with unparenthesized operation switch (gem v4.0.0-pre, f16e75a)", () => {
+  it("folds a pending operator into the switch expression at the first WHEN", () => {
+    expect(evaluate("CASE a % 5 WHEN 0 THEN a ELSE b END", { a: 10, b: 1 })).toBe(10);
+    expect(evaluate("CASE a % 5 WHEN 0 THEN a ELSE b END", { a: 11, b: 1 })).toBe(1);
+  });
+
+  it("accepts a comparator switch expression", () => {
+    expect(evaluate("CASE a > 5 WHEN true THEN 1 ELSE 2 END", { a: 10 })).toBe(1);
+    expect(evaluate("CASE a > 5 WHEN true THEN 1 ELSE 2 END", { a: 3 })).toBe(2);
+  });
+
+  it("still parses parenthesized and plain switches identically", () => {
+    expect(evaluate("CASE (a % 5) WHEN 0 THEN a ELSE b END", { a: 10, b: 1 })).toBe(10);
+    expect(evaluate("CASE a WHEN 10 THEN 1 ELSE 2 END", { a: 10 })).toBe(1);
+  });
+});
+
 describe("AST case (spec/ast/case_spec.rb)", () => {
   const one = num(1);
   const two = num(2);
