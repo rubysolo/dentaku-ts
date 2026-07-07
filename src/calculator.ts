@@ -15,6 +15,13 @@ import { FunctionRegistry, type FunctionSet } from "./functions/registry.js";
 import type { FunctionDef } from "./functions/types.js";
 import { parseFormula } from "./parser/parser.js";
 import { print as printAst } from "./printer.js";
+import {
+  type BulkFormulas,
+  type SolverHost,
+  solveBulk,
+  type TrySolveResult,
+  trySolveBulk,
+} from "./solver/bulk-solver.js";
 import { type ExternalValue, toExternal, toInternal, type Value, valueType } from "./values.js";
 
 /**
@@ -173,6 +180,38 @@ export class Calculator {
       throw error;
     }
     return mode.raw ? result : toExternal(result);
+  }
+
+  /**
+   * Solves a batch of named formulas in dependency order (issue 012; Ruby
+   * BulkExpressionSolver#solve!). Nested keys flatten to '.'-separated form
+   * and re-expand in the result. Results accumulate in a scratch scope over
+   * memory — solving never mutates this calculator. Throws the first error in
+   * evaluation order, tagged with the failing result `key`; dependency cycles
+   * throw CycleError listing the cycle members. Strict mode, like `evaluate`.
+   */
+  solve(formulas: BulkFormulas, vars?: Variables): Record<string, ExternalValue> {
+    return solveBulk(this.#solverHost(vars, true), formulas);
+  }
+
+  /**
+   * Like `solve`, but permissive (like `tryEvaluate`) and total: every input
+   * key lands in exactly one of `values`/`errors`. Cycle members and their
+   * downstream dependents get CycleError while independent keys still solve —
+   * per-key errors instead of Ruby's `:undefined`, and no abandon-all-on-cycle
+   * (PLAN.md "Additions").
+   */
+  trySolve(formulas: BulkFormulas, vars?: Variables): TrySolveResult {
+    return trySolveBulk(this.#solverHost(vars, false), formulas);
+  }
+
+  /** Minimal internal surface handed to the bulk solver (issue 012). */
+  #solverHost(vars: Variables | undefined, strict: boolean): SolverHost {
+    return {
+      ast: (formula) => this.ast(formula),
+      normalizeKey: (key) => this.#normalizeKey(key),
+      baseContext: this.#scope(vars, strict),
+    };
   }
 
   /**

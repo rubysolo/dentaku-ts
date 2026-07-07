@@ -32,6 +32,8 @@ export { defaultFunctionSet } from "./functions/builtins.js";
 export { FunctionRegistry, FunctionSet } from "./functions/registry.js";
 export type { FunctionDef, ReturnType } from "./functions/types.js";
 export { type ParseFormulaOptions, parseFormula } from "./parser/parser.js";
+// Bulk solver types (issue 012): the shapes of Calculator#solve/#trySolve.
+export type { BulkFormulas, TrySolveResult } from "./solver/bulk-solver.js";
 export {
   civilDateTimeFromDate,
   type DurationUnit,
