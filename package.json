@@ -1,9 +1,27 @@
 {
   "name": "dentaku",
-  "version": "0.0.0",
-  "description": "TypeScript spiritual successor to the Ruby dentaku formula language and calculator",
+  "version": "0.1.0",
+  "description": "Safe parser and evaluator for math and logic formulas with run-time variable binding — the TypeScript successor to the Ruby dentaku calculator",
+  "keywords": [
+    "formula",
+    "parser",
+    "evaluator",
+    "calculator",
+    "excel",
+    "dentaku",
+    "expression",
+    "safe-eval"
+  ],
   "license": "MIT",
   "author": "Solomon White",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubysolo/dentaku-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rubysolo/dentaku-ts/issues"
+  },
+  "homepage": "https://github.com/rubysolo/dentaku-ts#readme",
   "type": "module",
   "sideEffects": false,
   "engines": {
