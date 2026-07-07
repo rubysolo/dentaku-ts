@@ -1,13 +1,34 @@
 {
-  "description": "Divergence allowlist: corpus entries where dentaku-ts intentionally differs from Ruby dentaku 3.5.7, each justified by an ADR-0003 tightening or ADR-0004. The oracle runner (issue 014) asserts the TS-side `expected` outcome for listed entries and fails on any entry that stops diverging (stale). Seeded by issue 002; completed by issue 014.",
+  "description": "Divergence allowlist: corpus entries where dentaku-ts intentionally differs from Ruby dentaku 3.5.7, each justified by an ADR or a PLAN.md/issue-spec decision. The oracle runner (issue 014) asserts the TS-side `expected` outcome for listed entries and fails on any entry that stops diverging (stale). Seeded by issue 002; completed by issue 014.",
   "entrySchema": {
     "formula": "string — must equal a corpus entry's formula exactly",
     "vars": "object, optional (default {}) — must equal the corpus entry's vars exactly; (formula, vars) identifies the entry",
-    "reason": "one of \"ADR-0003.1\"…\"ADR-0003.5\" | \"ADR-0004\"",
+    "reason": "one of \"ADR-0003.1\"…\"ADR-0003.5\" | \"ADR-0004\" | \"ADR-0001\" (fixed 20-digit Decimal precision vs Ruby's variable-precision BigDecimal/Float results) | \"PLAN-additions\" (deliberate dentaku-ts semantic additions recorded in PLAN.md or an issue spec)",
     "expected": "TS-side outcome: a TS error class name string, or an encoded result object using the corpus result encoding",
     "note": "string, optional — reviewer context (what Ruby did and why TS differs)"
   },
   "entries": [
+    {
+      "formula": "      CASE number\n      WHEN 42\n        THEN 1\n      END\n",
+      "vars": { "number": 2 },
+      "reason": "PLAN-additions",
+      "expected": { "type": "null" },
+      "note": "Ruby raises Dentaku::ArgumentError when no WHEN matches and there is no ELSE; TS CASE is total and returns null (docs/issues/006: 'no match, no else -> null', SQL CASE semantics; tested in tests/evaluator.spec.ts)"
+    },
+    {
+      "formula": "(((695759/735000)^(1/(1981-1991)))-1)*1000",
+      "vars": {},
+      "reason": "ADR-0001",
+      "expected": { "type": "decimal", "value": "5.5017959154894691" },
+      "note": "Ruby BigDecimal#power carries ~44 significant digits here; TS decimal.js is pinned to precision 20 (src/decimal.ts, PLAN.md), and the (x^-0.1)-1 cancellation surfaces the truncation. Values agree to 17 significant digits"
+    },
+    {
+      "formula": "(400/60%)*1",
+      "vars": {},
+      "reason": "ADR-0001",
+      "expected": { "type": "decimal", "value": "666.66666666666666667" },
+      "note": "Ruby BigDecimal division emits 30 significant digits for 400/0.6; TS decimal.js is pinned to precision 20. Same value, different repeating-digit cutoff"
+    },
     {
       "formula": "-(negative) - 1",
       "vars": { "negative": "1" },
@@ -37,6 +58,13 @@
       "note": "Ruby coerces \"1\" and returns -2"
     },
     {
+      "formula": "2024/01/06",
+      "vars": {},
+      "reason": "ADR-0001",
+      "expected": { "type": "decimal", "value": "337.33333333333333333" },
+      "note": "Ruby BigDecimal division emits 29 significant digits for 2024/1/6; TS decimal.js is pinned to precision 20. Same value, different repeating-digit cutoff"
+    },
+    {
       "formula": "40 + N",
       "vars": { "n": 2 },
       "reason": "ADR-0003.1",
@@ -51,11 +79,32 @@
       "note": "Ruby downcases context keys, so N binds n and returns 42; TS identifiers are case-sensitive"
     },
     {
-      "formula": "AND(a,b)",
-      "vars": { "a": null, "b": null },
+      "formula": "400/60%",
+      "vars": {},
+      "reason": "ADR-0001",
+      "expected": { "type": "decimal", "value": "666.66666666666666667" },
+      "note": "Ruby BigDecimal division emits 30 significant digits for 400/0.6; TS decimal.js is pinned to precision 20. Same value, different repeating-digit cutoff"
+    },
+    {
+      "formula": "ALL(items, item, item.value)",
+      "vars": { "items": [{ "value": 1 }, {}] },
       "reason": "ADR-0003.2",
       "expected": "TypeMismatchError",
-      "note": "Ruby treats explicit nil as logical false and returns false; TS requires boolean operands"
+      "note": "Ruby treats the numeric item.value 1 as truthy and proceeds to the second item, whose missing key raises UnboundVariableError; TS requires the ALL body to produce a boolean and fails on the first item"
+    },
+    {
+      "formula": "ANY(items, item, item.value)",
+      "vars": { "items": [{ "value": 1 }, {}] },
+      "reason": "ADR-0003.2",
+      "expected": "TypeMismatchError",
+      "note": "Ruby treats the numeric item.value 1 as truthy and short-circuits to true; TS requires the ANY body to produce a boolean"
+    },
+    {
+      "formula": "AVG(1, x, 1.8)",
+      "vars": { "x": "2.3" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby's Function.numeric cast coerces the string context value \"2.3\" and returns 1.7; TS numeric function arguments must already be numbers"
     },
     {
       "formula": "IF(a,1,0)",
@@ -79,6 +128,27 @@
       "note": "Ruby treats the null literal predicate as false and returns 2; TS requires a boolean predicate"
     },
     {
+      "formula": "INTERCEPT(ys, xs)",
+      "vars": { "xs": [6, 13, 15, 10, 11, 10], "ys": [-1, 8, 8, 13, 3, 15] },
+      "reason": "ADR-0001",
+      "expected": { "type": "decimal", "value": "9.4368029739776951673" },
+      "note": "Ruby's intercept computes through Float (16 significant digits); TS computes the same regression exactly in Decimal at precision 20. Values agree to Float precision"
+    },
+    {
+      "formula": "MAX(1, x, 1.8)",
+      "vars": { "x": "2.3" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby's Function.numeric cast coerces \"2.3\" and returns 2.3; TS numeric function arguments must already be numbers"
+    },
+    {
+      "formula": "MIN(1, x, 1.8)",
+      "vars": { "x": "0.3" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby's Function.numeric cast coerces \"0.3\" and returns 0.3; TS numeric function arguments must already be numbers"
+    },
+    {
       "formula": "NOT(a)",
       "vars": { "a": null, "b": null },
       "reason": "ADR-0003.2",
@@ -86,11 +156,88 @@
       "note": "Ruby treats nil as false and returns true; TS requires a boolean operand"
     },
     {
-      "formula": "OR(a,b)",
-      "vars": { "a": null, "b": null },
-      "reason": "ADR-0003.2",
+      "formula": "OR(1 = \"1\", \"2\" = \"2\", true = false, false)",
+      "vars": {},
+      "reason": "ADR-0003.3",
       "expected": "TypeMismatchError",
-      "note": "Ruby treats explicit nil as logical false and returns false; TS requires boolean operands"
+      "note": "Ruby's `=` answers false for mixed-type pairs (1 = \"1\" is false, so Ruby returns true via \"2\" = \"2\"); TS makes mixed-type (in)equality a type error (no coercion between operand types, src/ast/equality.ts)"
+    },
+    {
+      "formula": "OR(1 = \"2\", 0 = 1)",
+      "vars": {},
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby's `=` answers false for the mixed-type pair and returns false; TS makes mixed-type equality a type error"
+    },
+    {
+      "formula": "ROUND(x, y)",
+      "vars": { "x": "1.8453", "y": "3" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces both string context values and returns 1.845; TS numeric function arguments must already be numbers"
+    },
+    {
+      "formula": "ROUND(x, y)",
+      "vars": { "x": "1.8453", "y": null },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces \"1.8453\" (nil places means 0) and returns 2; TS rejects the string argument"
+    },
+    {
+      "formula": "ROUNDDOWN(x, y)",
+      "vars": { "x": "1.8453", "y": "3" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces both string context values and returns 1.845; TS numeric function arguments must already be numbers"
+    },
+    {
+      "formula": "ROUNDDOWN(x, y)",
+      "vars": { "x": "1.8453", "y": null },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces \"1.8453\" (nil places means 0) and returns 1; TS rejects the string argument"
+    },
+    {
+      "formula": "ROUNDUP(x, y)",
+      "vars": { "x": "1.8453", "y": "3" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces both string context values and returns 1.846; TS numeric function arguments must already be numbers"
+    },
+    {
+      "formula": "ROUNDUP(x, y)",
+      "vars": { "x": "1.8453", "y": null },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby coerces \"1.8453\" (nil places means 0) and returns 2; TS rejects the string argument"
+    },
+    {
+      "formula": "SUM(1, x, 1.8)",
+      "vars": { "x": "2.3" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby's Function.numeric cast coerces \"2.3\" and returns 5.1; TS numeric function arguments must already be numbers"
+    },
+    {
+      "formula": "SUM(1, x, SUM(4, 5))",
+      "vars": { "x": "2.3" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby's Function.numeric cast coerces \"2.3\" and returns 12.3; TS numeric function arguments must already be numbers"
+    },
+    {
+      "formula": "a + b",
+      "vars": { "a": ["2017-01-01", "2017-01-02"], "b": ["2017-01-01"] },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby's `+` concatenates arrays (Array#+); TS arithmetic takes numeric operands only — the array concat/difference behavior is tightened away at eval time (src/ast/operands.ts)"
+    },
+    {
+      "formula": "a - b",
+      "vars": { "a": ["2017-01-01", "2017-01-02"], "b": ["2017-01-01"] },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby's `-` computes the array difference (Array#-); TS arithmetic takes numeric operands only"
     },
     {
       "formula": "a/b",
@@ -98,6 +245,20 @@
       "reason": "ADR-0003.3",
       "expected": "TypeMismatchError",
       "note": "Ruby coerces the string context values and returns 5; TS removes string->number coercion in arithmetic"
+    },
+    {
+      "formula": "mul(1, x, 1.8)",
+      "vars": { "x": "2.3" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby (with the gem's mul pack loaded, as its spec suite loads it) coerces \"2.3\" and returns 4.14; TS numeric function arguments must already be numbers"
+    },
+    {
+      "formula": "mul(1, x, mul(4, 5))",
+      "vars": { "x": "2.3" },
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby (with the mul pack loaded) coerces \"2.3\" and returns 46; TS numeric function arguments must already be numbers"
     },
     {
       "formula": "value + duration(1, month)",
@@ -126,6 +287,20 @@
       "reason": "ADR-0003.3",
       "expected": "TypeMismatchError",
       "note": "Ruby coerces the string context values and returns 12.3; TS removes string->number coercion in arithmetic"
+    },
+    {
+      "formula": "{1, 2, 3} + {4,5,6}",
+      "vars": {},
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby's `+` concatenates the array literals; TS arithmetic takes numeric operands only"
+    },
+    {
+      "formula": "{1, 2, 3} - {2,3}",
+      "vars": {},
+      "reason": "ADR-0003.3",
+      "expected": "TypeMismatchError",
+      "note": "Ruby's `-` computes the array difference; TS arithmetic takes numeric operands only"
     }
   ]
 }

@@ -37,6 +37,12 @@ require "json"
 require "bigdecimal"
 require "date"
 require "dentaku"
+# `require "dentaku"` registers every function pack EXCEPT mul (the one
+# functions/*.rb file the gem never requires by default). The spec suite loads
+# it explicitly (spec/ast/mul_spec.rb), so the oracle must evaluate in the same
+# context — otherwise MUL formulas record registry accidents (ParseError:
+# undefined function) instead of the behavior the specs exercise.
+require "dentaku/ast/functions/mul"
 require "dentaku/tokenizer"
 
 abort "usage: ruby -I <dentaku-lib> scripts/generate-oracle.rb pairs.json [out.json]" if ARGV.empty?

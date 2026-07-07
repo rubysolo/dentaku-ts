@@ -1934,28 +1934,37 @@
   {
     "formula": "MUL()",
     "vars": {},
-    "error": "ParseError"
+    "error": "ArgumentError"
   },
   {
     "formula": "MUL(1, x, 1.8)",
     "vars": {
       "x": 2.3
     },
-    "error": "ParseError"
+    "result": {
+      "type": "decimal",
+      "value": "4.14"
+    }
   },
   {
     "formula": "MUL(x)",
     "vars": {
       "x": 2.3
     },
-    "error": "ParseError"
+    "result": {
+      "type": "decimal",
+      "value": "2.3"
+    }
   },
   {
     "formula": "MUL(x)",
     "vars": {
       "x": []
     },
-    "error": "ParseError"
+    "result": {
+      "type": "decimal",
+      "value": "1"
+    }
   },
   {
     "formula": "Mass * Acceleration",
@@ -3557,21 +3566,30 @@
     "vars": {
       "x": "2.3"
     },
-    "error": "ParseError"
+    "result": {
+      "type": "decimal",
+      "value": "4.14"
+    }
   },
   {
     "formula": "mul(1, x, 2.3)",
     "vars": {
       "x": [4, 5]
     },
-    "error": "ParseError"
+    "result": {
+      "type": "decimal",
+      "value": "46"
+    }
   },
   {
     "formula": "mul(1, x, mul(4, 5))",
     "vars": {
       "x": "2.3"
     },
-    "error": "ParseError"
+    "result": {
+      "type": "decimal",
+      "value": "46"
+    }
   },
   {
     "formula": "not (8 < 5)",

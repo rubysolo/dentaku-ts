@@ -13,7 +13,7 @@ ruby -I /tmp/dentaku-ref/lib scripts/generate-oracle.rb /tmp/pairs.json tests/or
 pnpm exec biome format --write tests/oracle/corpus.json   # repo lint gate formats JSON
 ```
 
-Requires Ruby ≥ 3.3 (Prism) with the `bigdecimal` gem. `extract-corpus.rb` parses the gem's `spec/**/*.rb` for formula-bearing calls and their literal variable contexts; `generate-oracle.rb` obtains every result by **executing the gem** (fresh default `Dentaku::Calculator` per entry inside a rescue harness) — expected values are never hand-computed. Generation pins `TZ=UTC` so datetime results are machine-independent. Skipped cases (formulas calling spec-registered custom functions, non-literal formula arguments, dropped non-literal context values) are logged to stderr by the extraction script. One generated pair is skipped by the generation script (logged): bare `duration(1, day)` evaluates to an internal `Dentaku::AST::Duration::Value` object with no documented encoding — durations only surface in the corpus as date-arithmetic operands.
+Requires Ruby ≥ 3.3 (Prism) with the `bigdecimal` gem. `extract-corpus.rb` parses the gem's `spec/**/*.rb` for formula-bearing calls and their literal variable contexts; `generate-oracle.rb` obtains every result by **executing the gem** (fresh default `Dentaku::Calculator` per entry inside a rescue harness) — expected values are never hand-computed. The generator additionally `require`s `dentaku/ast/functions/mul`: it is the one gem function file `require "dentaku"` never loads, but the gem's own spec suite loads it explicitly (`spec/ast/mul_spec.rb`), so without the require the 7 MUL corpus entries recorded a registry accident (`ParseError`: undefined function) instead of the behavior the specs exercise (fixed in issue 014; corpus regenerated). Generation pins `TZ=UTC` so datetime results are machine-independent. Skipped cases (formulas calling spec-registered custom functions, non-literal formula arguments, dropped non-literal context values) are logged to stderr by the extraction script. One generated pair is skipped by the generation script (logged): bare `duration(1, day)` evaluates to an internal `Dentaku::AST::Duration::Value` object with no documented encoding — durations only surface in the corpus as date-arithmetic operands.
 
 Output is deterministic: entries are sorted by `[formula, JSON(vars)]` and pretty-printed with 2-space indent (then normalized by the Biome formatter, which is itself deterministic), so regeneration diffs cleanly.
 
@@ -55,7 +55,9 @@ The divergence allowlist: corpus entries where dentaku-ts intentionally differs,
 ```
 
 - `(formula, vars)` must identify an existing corpus entry exactly.
-- `reason` is `"ADR-0003.1"`…`"ADR-0003.5"` or `"ADR-0004"`.
+- `reason` is `"ADR-0003.1"`…`"ADR-0003.5"`, `"ADR-0004"`, or one of the two non-tightening categories added by issue 014:
+  - `"ADR-0001"` — numeric-representation divergence: dentaku-ts computes with decimal.js pinned to **precision 20** (`src/decimal.ts`, PLAN.md), while Ruby's results carry variable BigDecimal precision (division emits 29–44 significant digits depending on operands) or pass through Float (`intercept`). The values agree to the shorter precision; only the repeating-digit cutoff differs. No fixed decimal.js configuration can reproduce Ruby's per-operation precision rules.
+  - `"PLAN-additions"` — a deliberate dentaku-ts semantic addition recorded in PLAN.md or an issue spec rather than an ADR (e.g. docs/issues/006: `CASE` with no matching `WHEN` and no `ELSE` is total and returns null, where Ruby raised).
 - `expected` is the TS-side outcome: a TS error class name, or an encoded result object (same encoding as corpus results).
 
 The oracle runner (issue 014) asserts `expected` for listed entries, fails on any unlisted mismatch, and fails on any listed entry that stops diverging (stale allowlist).
@@ -64,9 +66,24 @@ The oracle runner (issue 014) asserts `expected` for listed entries, fails on an
 
 17 seed entries: 2×ADR-0003.1 (downcased identifiers), 6×ADR-0003.2 (Ruby nil-truthiness in `IF`/`AND`/`OR`/`NOT`), 6×ADR-0003.3 (string→number coercion in arithmetic/negation), 3×ADR-0004 (eval-time string→date coercion). Issue 014 completes the list.
 
+Issue 014 removed two seeds as incorrect predictions: `AND(a,b)` / `OR(a,b)` with nil arguments. The `AND()`/`OR()` *functions* deliberately keep Ruby's nil-counts-as-false admission (`src/functions/logic.ts`, tested in `tests/functions-logic.spec.ts`) — ADR-0003.2 only "extends the strictness AND()/OR() already had" — so TS returns `false` exactly like Ruby and there is no divergence to list. (`NOT`/`IF` with nil do diverge and stay listed.)
+
 Two tightenings have **no** seed entries, by measurement of the corpus rather than omission:
 
 - **ADR-0003.4 (bitwise precedence)** — no corpus formula mixes `| & << >>` with comparators unparenthesized; every bitwise formula (`2 | 3 * 9`, `2 & 3 * 9`, `1 << 3`, `0xFF >> 6`, `(5 | 2) + 1`, …) evaluates to the same value under Ruby's precedence-0 quirk and conventional precedence.
 - **ADR-0003.5 (bare date literals)** — the 24 affected entries carry `flags.dateLiterals` and the runner enables the option, reproducing Ruby's behavior for exactly those entries; no per-entry divergence remains to allowlist.
 
 Error-class-only differences (e.g. Ruby `Dentaku::ArgumentError` where TS throws `TypeMismatchError`) are not allowlisted: the runner's Ruby→TS error mapping table (issue 014) absorbs them.
+
+### Final allowlist (issue 014)
+
+**42 entries: 2×ADR-0003.1, 6×ADR-0003.2, 25×ADR-0003.3, 3×ADR-0004, 5×ADR-0001, 1×PLAN-additions** (8.3% of the 503-entry corpus; 2.4% of corpus entries produce a different *value* — the ADR-0003.x/0004 entries turn Ruby results into typed errors).
+
+By group:
+
+- **ADR-0003.1 (2)** — case-sensitive identifiers (the two seeds).
+- **ADR-0003.2 (6)** — strict booleans: `IF` with nil predicate (3 seeds), `NOT(nil)` (1 seed), plus `ALL`/`ANY` bodies producing numerics where Ruby used truthiness (2).
+- **ADR-0003.3 (25)** — the no-coercion posture at every site: string→number in arithmetic/negation (6 seeds), numeric-string arguments to `SUM`/`AVG`/`MIN`/`MAX`/`ROUND`/`ROUNDDOWN`/`ROUNDUP`/`mul` (13), mixed-type `=` as a type error where Ruby answered false (2), and Ruby's `Array#+`/`Array#-` concat/difference in arithmetic, tightened to numeric operands only (4).
+- **ADR-0004 (3)** — eval-time string→date coercion removed (the three seeds).
+- **ADR-0001 (5)** — fixed precision-20 Decimal vs Ruby's variable-precision BigDecimal division (3), a BigDecimal `power` chain (1), and Float-computed `intercept` (1).
+- **PLAN-additions (1)** — `CASE` no-match/no-`ELSE` returns null (docs/issues/006) where Ruby raised.
