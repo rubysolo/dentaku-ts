@@ -12,13 +12,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [20, 22, 24]
+        # 'mise.toml' is the pinned dev Node (currently 24.22.0), so the
+        # matrix always covers exactly what local dev and the build job use.
+        node: ['22', 'mise.toml', '26']
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ matrix.node != 'mise.toml' && matrix.node || '' }}
+          node-version-file: ${{ matrix.node == 'mise.toml' && 'mise.toml' || '' }}
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
@@ -31,9 +34,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: mise.toml
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
